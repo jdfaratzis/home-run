@@ -12,7 +12,11 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
+  HomeIcon,
+  Settings,
+  Users,
 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
@@ -156,20 +160,26 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
+    <div className="flex h-full flex-col gap-4 p-4">
+      <div className="px-2">
+        <h2 className="mb-2 px-4 text-lg font-semibold">Welcome Home, Joe</h2>
+        <div className="space-y-1">
+          <Button variant="secondary" className="w-full justify-start">
+            <HomeIcon className="mr-2 h-4 w-4" />
+            Home Base
+          </Button>
+          <Button variant="ghost" className="w-full justify-start">
+            <Users className="mr-2 h-4 w-4" />
+            Users
+          </Button>
+          <Button variant="ghost" className="w-full justify-start">
+            <Settings className="mr-2 h-4 w-4" />
+            Settings
+          </Button>
+        </div>
+      </div>
+    </div>
   )
 }
