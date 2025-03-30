@@ -1,33 +1,45 @@
-import Link from "next/link"
+"use client"
+
+import { useState } from "react"
+import { Calendar, Home, Music, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { HomeIcon, Settings, Users } from "lucide-react"
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+export function Sidebar() {
+  const [activeItem, setActiveItem] = useState("dashboard")
 
-export function Sidebar({ className }: SidebarProps) {
+  const navItems = [
+    { id: "home", icon: Home, label: "Home" },
+    { id: "dashboard", icon: Calendar, label: "Dashboard" },
+    { id: "music", icon: Music, label: "Music" },
+    { id: "settings", icon: Settings, label: "Settings" },
+  ]
+
   return (
-    <div className={cn("pb-12", className)}>
-      <div className="space-y-4 py-4">
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold">Home Run</h2>
-          <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start">
-              <HomeIcon className="mr-2 h-4 w-4" />
-              Home
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <Users className="mr-2 h-4 w-4" />
-              Users
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Button>
-          </div>
-        </div>
+    <div className="w-16 md:w-20 h-full bg-[#15151f]/80 backdrop-blur-md border-r border-[#ffffff]/5 flex flex-col items-center py-6 z-10">
+      <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center mb-10">
+        <div className="w-6 h-6 rounded-full bg-cyan-400 animate-pulse" />
       </div>
+
+      <nav className="flex-1 flex flex-col items-center gap-8">
+        {navItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setActiveItem(item.id)}
+            className={cn(
+              "relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300",
+              activeItem === item.id
+                ? "bg-cyan-500/20 text-cyan-400"
+                : "bg-[#ffffff]/5 text-[#ffffff]/60 hover:bg-[#ffffff]/10",
+            )}
+          >
+            <item.icon size={20} />
+            {activeItem === item.id && (
+              <span className="absolute -right-1 top-1/2 -translate-y-1/2 w-1 h-6 bg-cyan-400 rounded-full animate-pulse" />
+            )}
+          </button>
+        ))}
+      </nav>
     </div>
   )
-} 
+}
+
